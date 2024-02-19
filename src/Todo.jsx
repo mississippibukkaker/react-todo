@@ -24,6 +24,16 @@ export const Todo = () => {
     newTodos.splice(index, 1);
     setIncompleteTodos(newTodos);
   }
+  const onClickComplete = (index) => {
+    // 未完了から削除
+    const newIncompleteTodos = [...incompleteTodos];
+    newIncompleteTodos.splice(index, 1);
+    // 完了への追加
+    const newCompleteTodos = [...completeTodos, incompleteTodos[index]];
+    // state更新
+    setIncompleteTodos(newIncompleteTodos);
+    setCompleteTodos(newCompleteTodos);
+  }
 
   return (
     <>
@@ -42,7 +52,7 @@ export const Todo = () => {
             <li key={todo}>
               <div className="list-row">
                 <p className="todo-item">{todo}</p>
-                <button>完了</button>
+                <button onClick={() => {onClickComplete(index)}}>完了</button>
                 <button onClick={() => {onClickDelete(index)}}>削除</button>
               </div>
             </li>
