@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./styles.css";
+import { InputTodo } from "./components/InputTodo";
 
 export const Todo = () => {
   const [todoText, setTodoText] = useState("");
@@ -17,7 +18,7 @@ export const Todo = () => {
     const newTodos = [...incompleteTodos];
     newTodos.splice(index, 1);
     setIncompleteTodos(newTodos);
-  }
+  };
   const onClickComplete = (index) => {
     // 未完了から削除
     const newIncompleteTodos = [...incompleteTodos];
@@ -27,28 +28,25 @@ export const Todo = () => {
     // state更新
     setIncompleteTodos(newIncompleteTodos);
     setCompleteTodos(newCompleteTodos);
-  }
+  };
   const onClickBack = (index) => {
     // 完了から削除
     const newCompleteTodos = [...completeTodos];
-    newCompleteTodos.splice(index,1);
+    newCompleteTodos.splice(index, 1);
     // 未完了に追加
     const newIncompleteTodos = [...incompleteTodos, completeTodos[index]];
     // state更新
     setCompleteTodos(newCompleteTodos);
     setIncompleteTodos(newIncompleteTodos);
-  }
+  };
 
   return (
     <>
-      <div className="input-area">
-        <input
-          placeholder="TODOを入力"
-          value={todoText}
-          onChange={onChangeTodoText}
-        />
-        <button onClick={onClickAdd}>追加</button>
-      </div>
+      <InputTodo
+        todoText={todoText}
+        onChange={onChangeTodoText}
+        onClick={onClickAdd}
+      />
       <div className="incomplete-area">
         <p className="title">未完了のTODO</p>
         <ul>
@@ -56,8 +54,20 @@ export const Todo = () => {
             <li key={todo}>
               <div className="list-row">
                 <p className="todo-item">{todo}</p>
-                <button onClick={() => {onClickComplete(index)}}>完了</button>
-                <button onClick={() => {onClickDelete(index)}}>削除</button>
+                <button
+                  onClick={() => {
+                    onClickComplete(index);
+                  }}
+                >
+                  完了
+                </button>
+                <button
+                  onClick={() => {
+                    onClickDelete(index);
+                  }}
+                >
+                  削除
+                </button>
               </div>
             </li>
           ))}
@@ -70,7 +80,13 @@ export const Todo = () => {
             <li key={todo}>
               <div className="list-row">
                 <p className="todo-item">{todo}</p>
-                <button onClick={() => {onClickBack(index)}}>戻す</button>
+                <button
+                  onClick={() => {
+                    onClickBack(index);
+                  }}
+                >
+                  戻す
+                </button>
               </div>
             </li>
           ))}
